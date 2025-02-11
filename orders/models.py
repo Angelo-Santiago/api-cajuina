@@ -3,29 +3,17 @@
 from django.db import models
 
 class Table(models.Model):
-    STATUS_CHOICES = [
-        ('disponivel', 'Disponível'),
-        ('ocupada', 'Ocupada'),
-    ]
-    
-    numero = models.IntegerField(unique=True)  # Número da mesa
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='disponivel')  # Status da mesa
-    
-    def __str__(self):
-        return f"Mesa {self.numero} - Status: {self.status}"
+    numero = models.IntegerField(unique=True)  # Número único para a mesa
+    capacidade = models.IntegerField()  # Capacidade de pessoas
 
+    def __str__(self):
+        return f'Mesa {self.numero} - Capacidade: {self.capacidade}'
 
 class Order(models.Model):
-    STATUS_CHOICES = [
-        ('aberto', 'Aberto'),
-        ('fechado', 'Fechado'),
-    ]
-    
-    numero = models.IntegerField(unique=True)  # Número do pedido
-    data = models.DateTimeField(auto_now_add=True)  # Data do pedido
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='aberto')  # Status do pedido
-    mesa = models.ForeignKey(Table, null=True, blank=True, on_delete=models.SET_NULL)  # Mesa associada (opcional)
+    # Campos para Order
+    pass
 
-    def __str__(self):
-        return f"Pedido {self.numero} - Status: {self.status} - Mesa: {self.mesa.numero if self.mesa else 'Sem mesa'}"
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    # outros campos
 
