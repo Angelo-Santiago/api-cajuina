@@ -20,3 +20,21 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+from orders.order import processar_order
+
+# Exemplo de order (pedido)
+order = {
+    'id': 124,
+    'produto': 'Pizza Margherita',
+    'quantidade': 1,
+    'preco': 25.00,
+    'observacoes': 'Sem queijo extra'
+}
+
+# Defina se deve usar a impressora térmica ou gerar o PDF
+usar_impressora_termica = True  # Mude para False para gerar o PDF
+
+# Processa o pedido (order)
+processar_order(order, usar_impressora_termica)
