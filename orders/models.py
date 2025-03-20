@@ -2,7 +2,9 @@ from django.db import models
 
 class Table(models.Model):
     number = models.IntegerField(unique=True)  # Número único para a mesa
+    name = models.CharField(max_length=100, blank=True, null=True)  # Nome ou descrição da mesa
     capacity = models.IntegerField()  # Capacidade de pessoas
+    status = models.CharField(max_length=20, choices=[('livre', 'Livre'), ('ocupada', 'Ocupada')], default='livre')  # Status da mesa (livre ou ocupada)
 
     def __str__(self):
         return f'Mesa {self.number} - Capacidade: {self.capacity}'

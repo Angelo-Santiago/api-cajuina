@@ -1,18 +1,41 @@
+import qrcode
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import MesaForm
 from .models import Table,Order,OrderItem
 from django.http import JsonResponse
+from django.http import HttpResponse
+from django.urls import reverse
+
+def gerar_qrcode(request, mesa_id):
+    mesa = Table.objects.get(id=mesa_id)
+    url_mesa = request.build_absolute_uri(reverse('ver_mesa', args=[mesa.id]))  # Gerar URL para visualizar a mesa
+
+    # Gerar o QR Code
+    img = qrcode.make(url_mesa)
+    
+    # Criar resposta de imagem
+    response = HttpResponse(content_type="image/png")
+    img.save(response, "PNG")
+    return response
 
 def criar_mesa(request):
     if request.method == 'POST':
         form = MesaForm(request.POST)  # Passando os dados do formulário
         if form.is_valid():  # Verificando se os dados são válidos
             form.save()  # Salvando a mesa no banco
-            return redirect('listar_mesas')  # Redireciona para a lista de mesas após salvar
+            return redirect('lista_mesas')  # Redireciona para a lista de mesas após salvar
     else:
         form = MesaForm()  # Se não for um POST, apenas exibe o formulário vazio
 
     return render(request, 'criar_mesa.html', {'form': form})
+
+def ver_mesa(request, mesa_id):
+    mesa = Table.objects.get(id=mesa_id)  # Buscar a mesa pelo ID
+    return render(request, 'ver_mesa.html', {'mesa': mesa})
+
+def lista_mesas(request):
+    mesas = Table.objects.all()
+    return render(request, 'lista_mesas.html', {'mesas': mesas})
 
 
 def atualizar_mesa(request, pk):
@@ -21,7 +44,7 @@ def atualizar_mesa(request, pk):
         form = MesaForm(request.POST, instance=mesa)  # Passa os dados da mesa existente
         if form.is_valid():
             form.save()  # Atualiza a mesa no banco de dados
-            return redirect('listar_mesas')  # Redireciona para a lista de mesas
+            return redirect('lista_mesas')  # Redireciona para a lista de mesas
     else:
         form = MesaForm(instance=mesa)  # Exibe o formulário com os dados da mesa
 
@@ -30,7 +53,7 @@ def atualizar_mesa(request, pk):
 def deletar_mesa(request, pk):
     mesa = get_object_or_404(Table, pk=pk)
     mesa.delete()
-    return redirect('listar_mesas')  # Redireciona após deletar
+    return redirect('lista_mesas')  # Redireciona após deletar
 
 #carrinho
 

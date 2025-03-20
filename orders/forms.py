@@ -1,7 +1,7 @@
 from django import forms
-from .models import Mesa
+from .models import Table
 
 class MesaForm(forms.ModelForm):
     class Meta:
-        model = Mesa
-        fields = ['numero', 'capacidade']
+        model = Table
+        fields = ['number', 'name', 'capacity', 'status']

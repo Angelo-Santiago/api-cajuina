@@ -1,0 +1,22 @@
+<!-- lista_mesas.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Mesas</title>
+</head>
+<body>
+    <h1>Lista de Mesas</h1>
+    <ul>
+        {% for mesa in mesas %}
+            <li>
+                Mesa {{ mesa.numero }} - Status: {{ mesa.get_status_display }}
+                <br>
+                <img src="{% url 'gerar_qrcode' mesa.id %}" alt="QR Code para Mesa {{ mesa.numero }}">
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

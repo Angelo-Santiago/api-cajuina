@@ -1,0 +1,17 @@
+<!-- ver_mesa.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesa {{ mesa.numero }}</title>
+</head>
+<body>
+    <h1>Mesa {{ mesa.numero }}</h1>
+    <p>Status: {{ mesa.get_status_display }}</p>
+    <p>Nome: {{ mesa.nome }}</p>
+    
+    <a href="{% url 'index' %}">Voltar para a tela inicial</a>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!-- templates/criar_mesa.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Mesa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Criar Nova Mesa</h1>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_number">Número da Mesa</label>
+                {{ form.number }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_name">Nome/Descrição</label>
+                {{ form.name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_capacity">Capacidade</label>
+                {{ form.capacity }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_status">Status</label>
+                {{ form.status }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Salvar Mesa</button>
+        </form>
+        
+        <div class="mt-4">
+            <a href="{% url 'lista_mesas' %}" class="btn btn-secondary">Voltar para a lista de mesas</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5
